@@ -8,6 +8,8 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 import uuid
+import light
+
 
 ikkuna=tkinter.Tk()
 ikkuna.title("Example about handy CV2 and tkinter combination...")
@@ -104,6 +106,7 @@ def opendoor():
         conf, name = predict_face()
         if conf < 60 :
             paneeli_text.configure(text=f"Welcome {name}\n conf{conf}")
+            light.led_on(True)
         else:
             paneeli_text.configure(text=f"Sorry try again\n conf{conf}")
 

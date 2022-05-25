@@ -13,9 +13,11 @@ def detect_face(img_path):
     img = cv2.imread(img_path)
     face_detector_path = "haarcascade_frontalface_default.xml"
     faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades +face_detector_path)
-    detected_faces = faceCascade.detectMultiScale(img, 1.3, 5)
-    x, y, w, h = detected_faces[0] #focus on the 1st face in the image
-    
+    detected_faces = faceCascade.detectMultiScale(img, 1.1, 5)
+    try:
+        x, y, w, h = detected_faces[0] #focus on the 1st face in the image
+    except:
+        return []
     img = img[y:y+h, x:x+w] #focus on the detected area
     img = cv2.resize(img, (224, 224))
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -38,6 +40,8 @@ def cut_faces():
                 continue
             print(id,img_dir, img_path)
             img = detect_face(os.path.join('images',img_dir, img_path))
+            if len(img)==0:
+                continue
             faces.append(img)
             persons[id] = img_dir
             id+=1
